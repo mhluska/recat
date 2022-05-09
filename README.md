@@ -1,5 +1,9 @@
 # Tortie
 
+<a href="https://github.com/mhluska/tortie/actions"><img src="https://github.com/mhluska/tortie/actions/workflows/test.yml/badge.svg?branch=master" alt="Build Status" /></a>
+<a href="https://www.npmjs.com/package/tortie-core"><img src="https://img.shields.io/npm/v/tortie-core.svg" alt="Version"></a>
+<a href="https://github.com/mhluska/tortie/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mhluska/tortie" alt="License"></a>
+
 > Simple React clone built out of curiosity 🐈
 
 Currently missing a lot of features and probably inefficient. See it live
@@ -58,11 +62,7 @@ createVirtualElement(functionComponent, props, ...children);
 
 ```js
 const Kitten = ({ name }) => {
-  return e(
-    'div',
-    { className: 'kitten' },
-    e('h1', null, name)
-  );
+  return e('div', { className: 'kitten' }, e('h1', null, name));
 };
 
 render(
@@ -127,13 +127,8 @@ const Kitten = ({ name }) => {
     'div',
     { className: 'kitten' },
     e('h1', null, name),
-    e(
-      'button',
-      { onClick: () => setIsAwake(true) },
-      'Wake up'
-    ),
-    isAwake &&
-      e('span', null, `${name} woke up!`)
+    e('button', { onClick: () => setIsAwake(true) }, 'Wake up'),
+    isAwake && e('span', null, `${name} woke up!`)
   );
 };
 
@@ -183,11 +178,7 @@ const Kitten = ({ name }) => {
     'div',
     { className: 'kitten' },
     e('h1', null, name),
-    e(
-      'button',
-      { onClick: () => setIsAwake(true) },
-      'Wake up'
-    )
+    e('button', { onClick: () => setIsAwake(true) }, 'Wake up')
   );
 };
 
