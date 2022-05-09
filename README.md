@@ -6,20 +6,22 @@
 
 > Simple React clone built out of curiosity 🐈
 
-Currently missing a lot of features and probably inefficient. See it live
-[here](https://poker.mhluska.com).
-
-## Install
-
-```sh
-npm install --save tortie-core
-```
+I built this mostly to understand how React works under the hood. Currently
+it's missing a lot of features and is probably inefficient.
 
 ## Features
 
 - Function components with hooks
 - TypeScript support
 - No dependencies
+
+See it live [here](https://poker.mhluska.com).
+
+## Install
+
+```sh
+npm install --save tortie-core
+```
 
 ## API
 
