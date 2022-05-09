@@ -1,0 +1,24 @@
+{
+  "name": "tortie",
+  "version": "0.0.1",
+  "description": "Simple React clone built out of curiosity",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mhluska/tortie.git"
+  },
+  "keywords": [
+    "simple",
+    "react",
+    "clone"
+  ],
+  "author": "Maros Hluska <mhluska@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mhluska/tortie/issues"
+  },
+  "homepage": "https://github.com/mhluska/tortie#readme"
+}
