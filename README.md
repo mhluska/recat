@@ -5,6 +5,12 @@
 Currently missing a lot of features and probably inefficient. See it live
 [here](https://poker.mhluska.com).
 
+## Install
+
+```sh
+npm install --save tortie-core
+```
+
 ## Features
 
 - Function components with hooks

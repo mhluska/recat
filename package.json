@@ -1,5 +1,5 @@
 {
-  "name": "tortie",
+  "name": "tortie-core",
   "version": "0.0.1",
   "description": "Simple React clone built out of curiosity",
   "main": "src/index.ts",
