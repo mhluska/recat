@@ -163,7 +163,7 @@ const createDomNode = (
   }
 
   if (virtualElement.type === 'String') {
-    return document.createTextNode(virtualElement.value);
+    return appDocument.createTextNode(virtualElement.value);
   }
 
   if (isVirtualFunctionElement(virtualElement)) {
@@ -171,7 +171,7 @@ const createDomNode = (
   }
 
   const { children, type: tagName } = virtualElement;
-  const element = document.createElement(tagName);
+  const element = appDocument.createElement(tagName);
 
   reconcileProps(element, null, virtualElement);
 
@@ -275,6 +275,7 @@ export const reconcile = (
 
 let prevVirtualElement: VirtualElement = createVirtualElement('div');
 let forceRender: () => void;
+let appDocument: Document;
 
 // TODO: Add `createRoot` function instead.
 export const render = (
@@ -289,6 +290,10 @@ export const render = (
   // the prev virtual DOM against current and instead just compare the real DOM
   // against the current.
   forceRender = () => render(component, appRoot);
+
+  // Lets us avoid calling `global.document` so we can run this in a Node
+  // environment. Particularly useful for testing.
+  appDocument = appRoot.ownerDocument;
 
   reconcile(appRoot, prevVirtualElement, virtualElement);
 

@@ -4,7 +4,7 @@
   "description": "Simple React clone built out of curiosity",
   "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require ts-node/register --extension ts"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,12 @@
   "bugs": {
     "url": "https://github.com/mhluska/tortie/issues"
   },
-  "homepage": "https://github.com/mhluska/tortie#readme"
+  "homepage": "https://github.com/mhluska/tortie#readme",
+  "devDependencies": {
+    "@types/jsdom": "^16.2.14",
+    "@types/mocha": "^9.1.1",
+    "jsdom": "^19.0.0",
+    "mocha": "^10.0.0",
+    "ts-node": "^10.7.0"
+  }
 }
