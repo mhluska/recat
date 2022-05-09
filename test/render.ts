@@ -7,8 +7,8 @@ describe('render', function () {
   it('renders', function () {
     const dom = new JSDOM();
     const appRoot = dom.window.document.body;
-
     const renderString = 'Hello World';
+
     render(
       {
         type: 'div',

@@ -4,9 +4,8 @@ import {
   VirtualFunctionElement,
   VirtualStringElement,
   VirtualNativeElement,
-  NodeTypes
+  NodeTypes,
 } from './types';
-import { polyfillRequestIdleCallback } from './polyfills';
 
 // See https://github.com/microsoft/TypeScript/pull/12253#issuecomment-353494273
 export const keys = Object.keys as <T>(o: T) => (keyof T)[];
@@ -57,4 +56,16 @@ export const arraysEqual = (arr1: Primitive[], arr2: Primitive[]) => {
   return true;
 };
 
-export const requestIdleCallback = polyfillRequestIdleCallback();
+// TODO: Use an actual polyfill. This is gross.
+const createRequestIdleCallback = (): ((
+  callback: IdleRequestCallback,
+  options?: IdleRequestOptions
+) => void) => {
+  if (typeof requestIdleCallback === 'function') {
+    return requestIdleCallback;
+  } else {
+    return (callback: IdleRequestCallback) => setTimeout(callback, 0);
+  }
+};
+
+export const requestIdleCallback = createRequestIdleCallback();

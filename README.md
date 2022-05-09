@@ -6,8 +6,8 @@
 
 > Simple React clone built out of curiosity 🐈
 
-I built this mostly to understand how React works under the hood. Currently
-it's missing a lot of features and is probably inefficient.
+I built this mostly to understand how React works under the hood. Currently it
+supports only a small subset of the React API and is probably inefficient.
 
 ## Features
 
