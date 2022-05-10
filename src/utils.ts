@@ -55,17 +55,3 @@ export const arraysEqual = (arr1: Primitive[], arr2: Primitive[]) => {
 
   return true;
 };
-
-// TODO: Use an actual polyfill. This is gross.
-const createRequestIdleCallback = (): ((
-  callback: IdleRequestCallback,
-  options?: IdleRequestOptions
-) => void) => {
-  if (typeof requestIdleCallback === 'function') {
-    return requestIdleCallback;
-  } else {
-    return (callback: IdleRequestCallback) => setTimeout(callback, 0);
-  }
-};
-
-export const requestIdleCallback = createRequestIdleCallback();

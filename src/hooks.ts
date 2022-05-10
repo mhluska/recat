@@ -1,5 +1,5 @@
 import { Primitive, FunctionComponent, VirtualFunctionElement } from './types';
-import { arraysEqual, requestIdleCallback } from './utils';
+import { arraysEqual } from './utils';
 
 type Effect = {
   callback: () => void;

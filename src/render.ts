@@ -19,6 +19,7 @@ import {
   replaceNode,
 } from './utils';
 import { mountWithHooks, unmountWithHooks } from './hooks';
+import { polyfillAll } from './polyfills';
 
 enum ElementProperties {
   Value = 'value',
@@ -276,12 +277,22 @@ export const reconcile = (
 let prevVirtualElement: VirtualElement = createVirtualElement('div');
 let forceRender: () => void;
 let appDocument: Document;
+let polyfilled = false;
 
 // TODO: Add `createRoot` function instead.
 export const render = (
   component: VirtualNativeElement | VirtualFunctionElement,
   appRoot: HTMLElement
 ) => {
+  // Lets us avoid calling `global.document` so we can run this in a Node
+  // environment. Particularly useful for testing.
+  appDocument = appRoot.ownerDocument;
+
+  if (!polyfilled && appDocument.defaultView) {
+    polyfillAll(appDocument.defaultView);
+    polyfilled = true;
+  }
+
   const virtualElement = createVirtualElement('div', null, component);
 
   // We cache this for use in `mountWithHooks` (the `useState` hook needs to be
@@ -290,10 +301,6 @@ export const render = (
   // the prev virtual DOM against current and instead just compare the real DOM
   // against the current.
   forceRender = () => render(component, appRoot);
-
-  // Lets us avoid calling `global.document` so we can run this in a Node
-  // environment. Particularly useful for testing.
-  appDocument = appRoot.ownerDocument;
 
   reconcile(appRoot, prevVirtualElement, virtualElement);
 
