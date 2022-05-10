@@ -6,8 +6,8 @@
     "lib": ["dom","es2017"],
     "target": "es2015",
     "strict": true,
-    "outDir": "build",
-    "noEmit": true
+    "outDir": "dist",
+    "declaration": true
   },
   "include": ["src/**/*", "test/**/*"],
   "exclude": ["node_modules"]

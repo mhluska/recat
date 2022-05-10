@@ -2,8 +2,10 @@
   "name": "tortie-core",
   "version": "0.0.3",
   "description": "Simple React clone built out of curiosity",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
+    "prepublish": "tsc --project tsconfig-build.json",
     "test": "mocha --require ts-node/register --extension ts"
   },
   "repository": {
