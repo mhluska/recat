@@ -11,6 +11,7 @@ export type EventHandler = (this: HTMLElement, ev: Event) => void;
 export type CustomProperties = {
   onInput: EventHandler;
   onClick: EventHandler;
+  onSubmit: EventHandler;
 };
 
 export type VirtualElementProps = Partial<ElementKeys & CustomProperties>;

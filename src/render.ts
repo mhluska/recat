@@ -34,6 +34,7 @@ const EVENT_PROPS: Map<keyof CustomProperties, keyof HTMLElementEventMap> =
   new Map([
     ['onInput', 'input'],
     ['onClick', 'click'],
+    ['onSubmit', 'submit'],
   ]);
 
 const createVirtualStringElement = (value: string): VirtualStringElement => ({
@@ -127,7 +128,7 @@ const reconcileProps = (
       continue;
     }
 
-    if (name === 'onClick' || name === 'onInput') {
+    if (name === 'onClick' || name === 'onInput' || name === 'onSubmit') {
       const nativeEventName = EVENT_PROPS.get(name);
 
       if (nativeEventName) {
@@ -243,11 +244,7 @@ export const reconcile = (
   }
 
   if (isVirtualFunctionElement(prevNode) && isVirtualFunctionElement(newNode)) {
-    reconcile(
-      domNode,
-      prevNode.result,
-      mountWithHooks(newNode, forceRender)
-    );
+    reconcile(domNode, prevNode.result, mountWithHooks(newNode, forceRender));
     return;
   }
 
