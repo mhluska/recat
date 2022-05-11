@@ -4,16 +4,16 @@
 <a href="https://www.npmjs.com/package/tortie-core"><img src="https://img.shields.io/npm/v/tortie-core.svg" alt="Version"></a>
 <a href="https://github.com/mhluska/tortie/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mhluska/tortie" alt="License"></a>
 
-> Simple React clone built out of curiosity 🐈
+> Simple JavaScript rendering library with a React-compatible API
 
 I built this mostly to understand how React works under the hood. Currently it
-supports only a small subset of the React API and is probably inefficient.
+weighs in at 3KB minified and supports only a small subset of the React API.
 
 ## Features
 
-- Function components with hooks
-- TypeScript support
+- Function components with hooks (useState, useEffect)
 - No dependencies
+- Built with TypeScript
 
 See it live [here](https://poker.mhluska.com).
 
