@@ -7,7 +7,7 @@
 > Simple JavaScript rendering library with a React-compatible API
 
 I built this mostly to understand how React works under the hood. Currently it
-weighs in at 3KB minified and supports only a small subset of the React API.
+supports only a small subset of the React API (3KB minified).
 
 ## Features
 
