@@ -230,8 +230,8 @@ export const reconcile = (
     return;
   }
 
-  // We needlessly have to repeatedly check the type of `prevNode` here even
-  // though we ensure that both types are the same above.
+  // We have to repeatedly check the type of `prevNode` even though we ensure
+  // that both types are the same above.
   // See https://stackoverflow.com/questions/71397541
   if (prevNode.type === 'String' && newNode.type === 'String') {
     reconcileStrings(domNode, prevNode, newNode);

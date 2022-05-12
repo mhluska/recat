@@ -4,18 +4,18 @@
 <a href="https://www.npmjs.com/package/tortie-core"><img src="https://img.shields.io/npm/v/tortie-core.svg" alt="Version"></a>
 <a href="https://github.com/mhluska/tortie/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mhluska/tortie" alt="License"></a>
 
-> Simple JavaScript rendering library with a React-compatible API
+*Simple JavaScript rendering library with a React-compatible API*
 
 I built this mostly to understand how React works under the hood. Currently it
 supports only a small subset of the React API (3KB minified).
+
+See it live [here](https://poker.mhluska.com).
 
 ## Features
 
 - Function components with hooks (useState, useEffect)
 - No dependencies
 - Built with TypeScript
-
-See it live [here](https://poker.mhluska.com).
 
 ## Install
 
@@ -24,6 +24,11 @@ npm install --save tortie-core
 ```
 
 ## API
+
+- [render](https://github.com/mhluska/tortie#rendervirtualnode-domroot)
+- [createVirtualElement](https://github.com/mhluska/tortie#createvirtualelement-or-e)
+- [useState](https://github.com/mhluska/tortie#usestateinitialvalue)
+- [useEffect](https://github.com/mhluska/tortie#useeffectcallback-dependencies)
 
 ### `render(virtualNode, domRoot)`
 
@@ -85,7 +90,7 @@ Which renders:
 
 ### Event Handling
 
-Use the `onClick` or `onInput` prop:
+Use `onClick`, `onInput` or `onSubmit` props:
 
 ```js
 const Kitten = ({ name }) => {
@@ -173,7 +178,7 @@ const Kitten = ({ name }) => {
   const [isAwake, setIsAwake] = useState(false);
 
   useEffect(() => {
-    console.log(isAwake ? `${name} woke up!` : `${name} is asleep.`);
+    console.log(isAwake ? `${name} woke up!` : `${name} is asleep`);
   }, [isAwake]);
 
   return e(
@@ -201,7 +206,7 @@ Which renders:
 </div>
 ```
 
-On first render, the component prints `Nora is asleep.` to the console.
+On first render, the component prints `Nora is asleep` to the console.
 
 Pressing the button will print `Nora woke up!` to the console. Future button
 presses will not trigger the effect since we added `isAwake` to the dependency
