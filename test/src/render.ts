@@ -1,12 +1,12 @@
 import assert from 'assert';
 import { JSDOM } from 'jsdom';
 
-import { render } from '../src/render';
+import { render } from '../../src/render';
 
-describe('render', function () {
-  it('renders', function () {
+describe('render', () => {
+  it('renders', () => {
     const dom = new JSDOM();
-    const appRoot = dom.window.document.body;
+    const body = dom.window.document.body;
     const renderString = 'Hello World';
 
     render(
@@ -15,9 +15,12 @@ describe('render', function () {
         props: { className: 'container' },
         children: [{ type: 'String', value: renderString }],
       },
-      appRoot
+      body
     );
 
-    assert.equal(appRoot.querySelector('.container')?.innerHTML, renderString);
+    const container = body.querySelector('.container');
+
+    assert.ok(container);
+    assert.equal(container.innerHTML, renderString);
   });
 });

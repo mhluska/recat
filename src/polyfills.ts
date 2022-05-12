@@ -1,6 +1,6 @@
 // TODO: Use an actual polyfill. This is gross.
 export const polyfillRequestIdleCallback = (
-  window: Window & typeof globalThis
+  window: Window | typeof globalThis
 ) => {
   if (typeof window.requestIdleCallback === 'undefined') {
     window.requestIdleCallback = (
@@ -10,6 +10,6 @@ export const polyfillRequestIdleCallback = (
   }
 };
 
-export const polyfillAll = (window: Window & typeof globalThis) => {
+export const polyfillAll = (window: Window | typeof globalThis) => {
   polyfillRequestIdleCallback(window);
 };

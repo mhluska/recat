@@ -7,7 +7,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "prepublish": "parcel build",
-    "test": "mocha --require ts-node/register --extension ts"
+    "test": "mocha --require ts-node/register --file test/setup.ts --extension ts --recursive"
   },
   "repository": {
     "type": "git",
