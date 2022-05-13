@@ -26,7 +26,7 @@ npm install --save tortie-core
 ## API
 
 - [render](https://github.com/mhluska/tortie#rendervirtualnode-domroot)
-- [createVirtualElement](https://github.com/mhluska/tortie#createvirtualelement-or-e)
+- [createElement](https://github.com/mhluska/tortie#createelement-or-e)
 - [useState](https://github.com/mhluska/tortie#usestateinitialvalue)
 - [useEffect](https://github.com/mhluska/tortie#useeffectcallback-dependencies)
 
@@ -36,12 +36,12 @@ Updates the `domRoot` contents using the virtual DOM tree at `virtualNode`.
 Subsequent render calls will try to make as few writes as possible to the real
 DOM tree.
 
-### `createVirtualElement` or `e`
+### `createElement` or `e`
 
 Creates a virtual DOM node. It can be used to render regular DOM elements:
 
 ```js
-createVirtualElement(tagName, attributes, ...children);
+createElement(tagName, attributes, ...children);
 ```
 
 To render, pass the virtual node to the `render` function:
@@ -64,7 +64,7 @@ Which renders:
 It can also render function components:
 
 ```js
-createVirtualElement(functionComponent, props, ...children);
+createElement(functionComponent, props, ...children);
 ```
 
 ```js

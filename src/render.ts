@@ -42,19 +42,19 @@ const createVirtualStringElement = (value: string): VirtualStringElement => ({
   value,
 });
 
-export function createVirtualElement<Props, ChildProps>(
+export function createElement<Props, ChildProps>(
   type: FunctionComponent<Props>,
   props?: Props,
   ...children: (null | string | VirtualElement<ChildProps>)[]
 ): VirtualFunctionElement<Props>;
 
-export function createVirtualElement<ChildProps>(
+export function createElement<ChildProps>(
   type: keyof HTMLElementTagNameMap,
   props?: VirtualElementProps | null,
   ...children: (null | string | VirtualElement<ChildProps>)[]
 ): VirtualNativeElement;
 
-export function createVirtualElement<Props, ChildProps>(
+export function createElement<Props, ChildProps>(
   type: FunctionComponent<Props> | keyof HTMLElementTagNameMap,
   props?: Props | VirtualElementProps | null,
   ...children: (null | string | VirtualElement<ChildProps>)[]
@@ -77,7 +77,7 @@ export function createVirtualElement<Props, ChildProps>(
       } as VirtualNativeElement);
 }
 
-export const e = createVirtualElement;
+export const e = createElement;
 
 const reconcileEventHandlerProps = (
   domNode: Element,
@@ -271,7 +271,7 @@ export const reconcile = (
   }
 };
 
-let prevVirtualElement: VirtualElement = createVirtualElement('div');
+let prevVirtualElement: VirtualElement = createElement('div');
 let forceRender: () => void;
 let appDocument: Document;
 let polyfilled = false;
@@ -290,7 +290,7 @@ export const render = (
     polyfilled = true;
   }
 
-  const virtualElement = createVirtualElement('div', null, component);
+  const virtualElement = createElement('div', null, component);
 
   // We cache this for use in `mountWithHooks` (the `useState` hook needs to be
   // able to trigger renders).
