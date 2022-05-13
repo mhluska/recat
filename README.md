@@ -1,8 +1,8 @@
-# Tortie
+# Recat
 
-<a href="https://github.com/mhluska/tortie/actions"><img src="https://github.com/mhluska/tortie/actions/workflows/test.yml/badge.svg?branch=master" alt="Build Status" /></a>
-<a href="https://www.npmjs.com/package/tortie-core"><img src="https://img.shields.io/npm/v/tortie-core.svg" alt="Version"></a>
-<a href="https://github.com/mhluska/tortie/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mhluska/tortie" alt="License"></a>
+<a href="https://github.com/mhluska/recat/actions"><img src="https://github.com/mhluska/recat/actions/workflows/test.yml/badge.svg?branch=master" alt="Build Status" /></a>
+<a href="https://www.npmjs.com/package/recat-core"><img src="https://img.shields.io/npm/v/recat-core.svg" alt="Version"></a>
+<a href="https://github.com/mhluska/recat/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mhluska/recat" alt="License"></a>
 
 *Simple JavaScript rendering library with a React-compatible API*
 
@@ -20,15 +20,15 @@ See it live [here](https://poker.mhluska.com).
 ## Install
 
 ```sh
-npm install --save tortie-core
+npm install --save recat-core
 ```
 
 ## API
 
-- [render](https://github.com/mhluska/tortie#rendervirtualnode-domroot)
-- [createElement](https://github.com/mhluska/tortie#createelement-or-e)
-- [useState](https://github.com/mhluska/tortie#usestateinitialvalue)
-- [useEffect](https://github.com/mhluska/tortie#useeffectcallback-dependencies)
+- [render](https://github.com/mhluska/recat#rendervirtualnode-domroot)
+- [createElement](https://github.com/mhluska/recat#createelement-or-e)
+- [useState](https://github.com/mhluska/recat#usestateinitialvalue)
+- [useEffect](https://github.com/mhluska/recat#useeffectcallback-dependencies)
 
 ### `render(virtualNode, domRoot)`
 
