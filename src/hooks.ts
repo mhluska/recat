@@ -11,17 +11,16 @@ type HookData<T> = {
   [key in keyof T]: T[key];
 };
 
-type UseStateData = HookData<{ value: unknown }>;
+type UseStateHook = HookData<{ value: unknown }>;
+type UseEffectHook = HookData<Effect>;
 
 let currentComponent: FunctionComponent<unknown>;
 let currentForceRender: () => void;
 
-// TODO: Since hooks should always fire in the same order, we could just push
-// all hook data onto a single array with an index that increments per call.
-// That way we don't keep in memory other hooks data when we don't need to.
 const hooks = {
-  useState: new Map<FunctionComponent<unknown>, UseStateData[]>(),
-  useEffect: new Map<FunctionComponent<unknown>, HookData<Effect>[]>(),
+  useStateCallCount: 0,
+  useState: new Map<FunctionComponent<unknown>, UseStateHook[]>(),
+  useEffect: new Map<FunctionComponent<unknown>, UseEffectHook[]>(),
 };
 
 // Calls callback if dependencies change between renders.
@@ -42,14 +41,19 @@ export const useEffect = (
 
 // TODO: This should be a special case of `useReducer` once it's implemented.
 export const useState = <T>(initialValue: T): [T, (value: T) => void] => {
-  let componentHookData = hooks.useState.get(currentComponent);
-  if (!componentHookData) {
-    componentHookData = [{ value: initialValue }];
-    hooks.useState.set(currentComponent, componentHookData);
+  let componentHookCalls = hooks.useState.get(currentComponent);
+  if (!componentHookCalls) {
+    componentHookCalls = [];
+    hooks.useState.set(currentComponent, componentHookCalls);
   }
 
-  // TODO: Make this work with multiple useState calls.
-  const hook = componentHookData[componentHookData.length - 1];
+  let hook = componentHookCalls[hooks.useStateCallCount];
+  if (!hook) {
+    hook = { value: initialValue };
+    componentHookCalls.push(hook);
+  }
+
+  hooks.useStateCallCount += 1;
 
   const setState = (value: T) => {
     if (hook.value !== value) {
@@ -64,8 +68,6 @@ export const useState = <T>(initialValue: T): [T, (value: T) => void] => {
     }
   };
 
-  // TODO: Can we avoid the cast here? Otherwise value would be `unknown`
-  // because of the `hooks.useState` definition above.
   return [hook.value as T, setState];
 };
 
@@ -73,6 +75,7 @@ export const mountWithHooks = (
   virtualElement: VirtualFunctionElement,
   forceRender: () => void
 ) => {
+  hooks.useStateCallCount = 0;
   currentComponent = virtualElement.type;
   currentForceRender = forceRender;
 

@@ -1,7 +1,7 @@
 import assert from 'assert';
 import { JSDOM } from 'jsdom';
 
-import { attributeChanged } from '../utils';
+import { attributeChanged, characterDataChanged } from '../utils';
 import { render, e, useState } from '../../src';
 
 describe('hooks', () => {
@@ -15,10 +15,17 @@ describe('hooks', () => {
 
       const Button = () => {
         const [isDisabled, setIsDisabled] = useState(false);
+        const [buttonText, setButtonText] = useState('Submit');
         return e(
           'button',
-          { disabled: isDisabled, onClick: () => setIsDisabled(true) },
-          'Submit'
+          {
+            disabled: isDisabled,
+            onClick: () => {
+              setIsDisabled(true);
+              setButtonText('Loading');
+            },
+          },
+          buttonText
         );
       };
 
@@ -35,9 +42,13 @@ describe('hooks', () => {
 
       buttonElem.dispatchEvent(new dom.window.Event('click'));
 
-      await attributeChanged(buttonElem, 'disabled');
+      await Promise.all([
+        attributeChanged(buttonElem, 'disabled'),
+        characterDataChanged(buttonElem),
+      ]);
 
       assert.equal(buttonElem.disabled, true);
+      assert.equal(buttonElem.innerHTML, 'Loading');
     });
   });
 });
