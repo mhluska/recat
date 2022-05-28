@@ -32,25 +32,36 @@ export const isTextNode = (node: Node): node is Text =>
   node.nodeType === NodeTypes.Text;
 
 export const replaceNode = (
-  node: Text | Element,
-  newNode: Text | HTMLElement | null
+  node: Text | Element | Comment,
+  newNode: Text | HTMLElement | Comment | null
 ) => {
   if (!newNode) {
     return;
   }
 
-  node.parentElement?.replaceChild(newNode, node);
+  return node.parentElement?.replaceChild(newNode, node);
 };
 
 export const appendNode = (
-  node: Text | Element,
-  newNode: Text | HTMLElement | null
+  node: Text | Element | Comment,
+  newNode: Text | HTMLElement | Comment | null
 ) => {
   if (!newNode) {
     return;
   }
 
-  node.appendChild(newNode);
+  return node.appendChild(newNode);
+};
+
+export const insertBefore = (
+  newNode: Text | HTMLElement | Comment | null,
+  referenceNode: Text | Element | Comment
+) => {
+  if (!newNode) {
+    return;
+  }
+
+  return referenceNode.parentNode?.insertBefore(newNode, referenceNode);
 };
 
 export const arraysEqual = (arr1: Primitive[], arr2: Primitive[]) => {

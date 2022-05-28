@@ -30,7 +30,7 @@ describe('render', () => {
     assert.equal(container.innerHTML, renderString);
   });
 
-  it.only('renders virtual function elements', () => {
+  it('renders virtual function elements', () => {
     const renderString = 'Hello World';
 
     render(
@@ -52,7 +52,23 @@ describe('render', () => {
     assert.equal(container.innerHTML, renderString);
   });
 
-  it('deletes child elements', () => {
+  it('updates child elements', () => {
+    const observer = new dom.window.MutationObserver(() => {});
+    observer.observe(body, { childList: true, subtree: true });
+
+    render(
+      {
+        type: 'ol',
+        props: { className: 'container' },
+        children: [
+          null,
+          { type: 'li', props: {}, children: [{ type: 'String', value: 'B' }] },
+          { type: 'li', props: {}, children: [{ type: 'String', value: 'C' }] },
+        ],
+      },
+      body
+    );
+
     render(
       {
         type: 'ol',
@@ -71,7 +87,8 @@ describe('render', () => {
         type: 'ol',
         props: { className: 'container' },
         children: [
-          { type: 'li', props: {}, children: [{ type: 'String', value: 'A' }] },
+          null,
+          { type: 'li', props: {}, children: [{ type: 'String', value: 'B' }] },
           { type: 'li', props: {}, children: [{ type: 'String', value: 'C' }] },
         ],
       },
@@ -84,7 +101,16 @@ describe('render', () => {
     assert.ok(container);
     assert.ok(items);
     assert.equal(items.length, 2);
-    assert.equal(items[0].innerHTML, 'A');
-    assert.equal(items[1].innerHTML, 'C');
+    assert.equal(items[0]?.innerHTML, 'B');
+    assert.equal(items[1]?.innerHTML, 'C');
+
+    const mutationRecords = observer.takeRecords();
+
+    assert.equal(mutationRecords.length, 3);
+    assert.equal(mutationRecords[2]?.addedNodes.length, 0);
+    assert.equal(mutationRecords[2]?.removedNodes.length, 1);
+    assert.equal(mutationRecords[2]?.removedNodes[0]?.textContent, 'A');
+
+    observer.disconnect();
   });
 });

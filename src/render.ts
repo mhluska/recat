@@ -18,6 +18,7 @@ import {
   isElementNode,
   replaceNode,
   appendNode,
+  insertBefore,
 } from './utils';
 import { mountWithHooks, unmountWithHooks } from './hooks';
 import { polyfillAll } from './polyfills';
@@ -262,16 +263,44 @@ export const reconcile = (
       newNode.children.length
     );
 
+    let domIndex = 0;
+
     for (let index = 0; index < maxChildren; index += 1) {
-      const domNodeChild = domNodeChildren[index];
+      const domNodeChild = domNodeChildren[domIndex];
       const prevNodeChild = prevNode.children[index];
       const newNodeChild = newNode.children[index];
 
+      // There are a few cases to consider when child nodes are updated:
+      //
+      // 1. DOM node does not exist:
+      //    a. A new virtual DOM node exists:
+      //       Just append a child under the parent node.
+      // 2. DOM node exists:
+      //    a. Both prev and next virtual DOM nodes exist:
+      //       No deletion/addition happened so just reconcile the nodes.
+      //    b. Prev virtual node exists but next does not:
+      //       A deletion happened so remove the DOM node.
+      //    c. Prev virtual node does not exist but next exists:
+      //       An insertion happened. Since we know a DOM node exists, we insert
+      //       before that node. What about insertion at the end of the child
+      //       list? That is handled by case 1a where a DOM node does not exist.
+
       if (domNodeChild) {
-        reconcile(domNodeChild, prevNodeChild, newNodeChild);
+        if (prevNodeChild && newNodeChild) {
+          reconcile(domNodeChild, prevNodeChild, newNodeChild);
+        } else if (prevNodeChild) {
+          domNodeChild.remove();
+        } else if (newNodeChild) {
+          insertBefore(createDomNode(newNodeChild), domNodeChild);
+          continue;
+        } else {
+          continue;
+        }
       } else if (newNodeChild) {
         appendNode(domNode, createDomNode(newNodeChild));
       }
+
+      domIndex += 1;
     }
   }
 };

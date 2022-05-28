@@ -55,7 +55,7 @@ export const useState = <T>(initialValue: T): [T, (value: T) => void] => {
 
   hooks.useStateCallCount += 1;
 
-  const setState = (value: T) => {
+  const createSetState = (hook: UseStateHook) => (value: T) => {
     if (hook.value !== value) {
       hook.value = value;
 
@@ -68,7 +68,7 @@ export const useState = <T>(initialValue: T): [T, (value: T) => void] => {
     }
   };
 
-  return [hook.value as T, setState];
+  return [hook.value as T, createSetState(hook)];
 };
 
 export const mountWithHooks = (
