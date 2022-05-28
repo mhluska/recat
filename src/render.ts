@@ -270,6 +270,13 @@ export const reconcile = (
       const prevNodeChild = prevNode.children[index];
       const newNodeChild = newNode.children[index];
 
+      const prevExists =
+        prevNodeChild && isVirtualFunctionElement(prevNodeChild)
+          ? !!prevNodeChild.result
+          : !!prevNodeChild;
+
+      const newExists = !!newNodeChild;
+
       // There are a few cases to consider when child nodes are updated:
       //
       // 1. DOM node does not exist:
@@ -286,17 +293,17 @@ export const reconcile = (
       //       list? That is handled by case 1a where a DOM node does not exist.
 
       if (domNodeChild) {
-        if (prevNodeChild && newNodeChild) {
+        if (prevExists && newExists) {
           reconcile(domNodeChild, prevNodeChild, newNodeChild);
-        } else if (prevNodeChild) {
+        } else if (prevExists) {
           domNodeChild.remove();
-        } else if (newNodeChild) {
+        } else if (newExists) {
           insertBefore(createDomNode(newNodeChild), domNodeChild);
           continue;
         } else {
           continue;
         }
-      } else if (newNodeChild) {
+      } else if (newExists) {
         appendNode(domNode, createDomNode(newNodeChild));
       }
 
