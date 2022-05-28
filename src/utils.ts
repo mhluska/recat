@@ -42,6 +42,17 @@ export const replaceNode = (
   node.parentElement?.replaceChild(newNode, node);
 };
 
+export const appendNode = (
+  node: Text | Element,
+  newNode: Text | HTMLElement | null
+) => {
+  if (!newNode) {
+    return;
+  }
+
+  node.appendChild(newNode);
+};
+
 export const arraysEqual = (arr1: Primitive[], arr2: Primitive[]) => {
   if (arr1.length !== arr2.length) {
     return false;

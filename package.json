@@ -6,7 +6,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "prepublish": "parcel build",
+    "build": "parcel build",
+    "prepublish": "npm run build",
     "test": "mocha --require ts-node/register --file test/setup.ts --extension ts --recursive"
   },
   "repository": {

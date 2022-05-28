@@ -17,6 +17,7 @@ import {
   isTextNode,
   isElementNode,
   replaceNode,
+  appendNode,
 } from './utils';
 import { mountWithHooks, unmountWithHooks } from './hooks';
 import { polyfillAll } from './polyfills';
@@ -256,18 +257,22 @@ export const reconcile = (
         node.nodeType === NodeTypes.Element || node.nodeType === NodeTypes.Text
     ) as (Element | Text)[];
 
-    newNode.children.forEach((newNodeChild, index) => {
+    const maxChildren = Math.max(
+      prevNode.children.length,
+      newNode.children.length
+    );
+
+    for (let index = 0; index < maxChildren; index += 1) {
       const domNodeChild = domNodeChildren[index];
+      const prevNodeChild = prevNode.children[index];
+      const newNodeChild = newNode.children[index];
 
       if (domNodeChild) {
-        reconcile(domNodeChild, prevNode.children[index], newNodeChild);
+        reconcile(domNodeChild, prevNodeChild, newNodeChild);
       } else if (newNodeChild) {
-        const node = createDomNode(newNodeChild);
-        if (node) {
-          domNode.appendChild(node);
-        }
+        appendNode(domNode, createDomNode(newNodeChild));
       }
-    });
+    }
   }
 };
 
@@ -294,9 +299,7 @@ export const render = (
 
   // We cache this for use in `mountWithHooks` (the `useState` hook needs to be
   // able to trigger renders).
-  // TODO: Add the ability to do a partial render. We'd need to stop comparing
-  // the prev virtual DOM against current and instead just compare the real DOM
-  // against the current.
+  // TODO: Add the ability to do a partial render.
   forceRender = () => render(component, appRoot);
 
   reconcile(appRoot, prevVirtualElement, virtualElement);
