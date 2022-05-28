@@ -298,7 +298,11 @@ export const reconcile = (
         } else if (prevExists) {
           domNodeChild.remove();
         } else if (newExists) {
-          insertBefore(createDomNode(newNodeChild), domNodeChild);
+          insertBefore(
+            domNode,
+            createDomNode(newNodeChild),
+            domNodeChild
+          );
           continue;
         } else {
           continue;

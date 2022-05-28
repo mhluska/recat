@@ -35,33 +35,28 @@ export const replaceNode = (
   node: Text | Element | Comment,
   newNode: Text | HTMLElement | Comment | null
 ) => {
-  if (!newNode) {
-    return;
+  if (newNode) {
+    return node.parentElement?.replaceChild(newNode, node);
   }
-
-  return node.parentElement?.replaceChild(newNode, node);
 };
 
 export const appendNode = (
   node: Text | Element | Comment,
   newNode: Text | HTMLElement | Comment | null
 ) => {
-  if (!newNode) {
-    return;
+  if (newNode) {
+    return node.appendChild(newNode);
   }
-
-  return node.appendChild(newNode);
 };
 
 export const insertBefore = (
+  parentNode: Element | null,
   newNode: Text | HTMLElement | Comment | null,
   referenceNode: Text | Element | Comment
 ) => {
-  if (!newNode) {
-    return;
+  if (parentNode && newNode) {
+    return parentNode.insertBefore(newNode, referenceNode);
   }
-
-  return referenceNode.parentNode?.insertBefore(newNode, referenceNode);
 };
 
 export const arraysEqual = (arr1: Primitive[], arr2: Primitive[]) => {
